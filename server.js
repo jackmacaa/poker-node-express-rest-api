@@ -8,6 +8,9 @@ const PORT = process.env.PORT;
 
 const app = express();
 
+app.set("view engine", "ejs");
+app.set("views", "views");
+
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,7 +25,7 @@ app.use(
 );
 
 // Routes
-app.use("/api/players", players);
+app.use("/", players);
 
 // middleware
 app.use(notFound);

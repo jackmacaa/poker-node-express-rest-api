@@ -7,15 +7,16 @@ let players = [
 // @desc   Get all players
 // @route  GET /api/players
 export const getPlayers = (req, res, next) => {
-  const limit = parseInt(req.query.limit);
+  res.render("index", { players });
+  //   const limit = parseInt(req.query.limit);
 
-  if (!isNaN(limit) && limit > 0) {
-    return res
-      .status(200)
-      .json(players.slice(0, limit));
-  }
+  //   if (!isNaN(limit) && limit > 0) {
+  //     return res
+  //       .status(200)
+  //       .json(players.slice(0, limit));
+  //   }
 
-  res.status(200).json(players);
+  //   res.status(200).json(players);
 };
 
 // // @desc    Get single post
