@@ -68,9 +68,8 @@ export const createPlayer = (req, res, next) => {
   const newPlayer = {
     id: players.length + 1,
     name: req.body.name,
+    type: req.body.type,
   };
-
-  console.log("creating", newPlayer);
 
   if (!newPlayer.name) {
     const error = new Error(
@@ -81,7 +80,7 @@ export const createPlayer = (req, res, next) => {
   }
 
   players.push(newPlayer);
-  res.status(201).json(players);
+  res.render("index", { players });
 };
 
 // // @desc    Update post
@@ -106,22 +105,24 @@ export const createPlayer = (req, res, next) => {
 
 // // @desc    Delete post
 // // @route   DELETE /api/players/:id
-// export const deletePost = (req, res, next) => {
-//   const id = parseInt(req.params.id);
-//   const post = players.find(
-//     (post) => post.id === id
-//   );
+export const deletePlayer = (req, res, next) => {
+  console.log(req.params);
+  console.log(req.body);
+  const id = parseInt(req.params.id);
+  const player = players.find(
+    (player) => player.id === id
+  );
 
-//   if (!post) {
-//     const error = new Error(
-//       `A post with the id of ${id} was not found`
-//     );
-//     error.status = 404;
-//     return next(error);
-//   }
+  if (!player) {
+    const error = new Error(
+      `A player with the id of ${id} was not found`
+    );
+    error.status = 404;
+    return next(error);
+  }
 
-//   players = players.filter(
-//     (post) => post.id !== id
-//   );
-//   res.status(200).json(players);
-// };
+  players = players.filter(
+    (player) => player.id !== id
+  );
+  res.status(200).json(players);
+};

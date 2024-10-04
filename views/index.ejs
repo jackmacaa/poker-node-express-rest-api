@@ -3,12 +3,11 @@
 <body>
   <h1>View and Add Players</h1>
 
-
-  <form id="add-player-form" form action="/" method="post">
+  <form id="add-player-form" action="/" method="POST">
     <label for="name">Player Name:</label><br />
     <input type="text" id="name" name="name" /><br />
-    <!-- <label for="player-type">Player type:</label><br />
-    <input type="text" id="player-type" name="player-type" /><br /> -->
+    <label for="type">type:</label><br />
+    <input type="text" id="type" name="type" /><br />
     <button type="submit">Add Player</button>
   </form>
 
@@ -18,11 +17,15 @@
       <b>ID: </b><%= player.id %> <br />
       <b>Player Name: </b><%= player.name %><br />
       <b>Player Type: </b><%= player.type %>
+
+      <form id="delete-player-form" action="/<%=player.id %>" method="DELETE">
+
+        <button type="submit">Delete</button>
+      </form>
     </li>
     <% }); %>
   </ul>
 
-  <script src="./js/player.js"></script>
 </body>
 
 </html>

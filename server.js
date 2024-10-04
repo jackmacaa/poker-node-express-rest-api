@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import players from "./routes/players.js";
+import players from "./routes/playersRouter.js";
 import notFound from "./middleware/notFound.js";
 
 const PORT = process.env.PORT;

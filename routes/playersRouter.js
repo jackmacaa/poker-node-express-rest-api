@@ -2,6 +2,7 @@ import express from "express";
 import {
   getPlayers,
   createPlayer,
+  deletePlayer,
 } from "../controllers/playerController.js";
 
 const router = express.Router();
@@ -18,7 +19,7 @@ router.post("/", createPlayer);
 // // Update Post
 // router.put("/:id", updatePost);
 
-// // Delete Post
-// router.delete("/:id", deletePost);
+// Delete Post
+router.delete("/:id", deletePlayer);
 
 export default router;
