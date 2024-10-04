@@ -1,12 +1,30 @@
 let players = [
-  { id: 1, name: "Player One", type: "LAG" },
-  { id: 2, name: "Player Two", type: "NIT" },
-  { id: 3, name: "Player Three", type: "TAG" },
+  {
+    id: 1,
+    name: "Player One",
+    type: "LAG",
+  },
+  {
+    id: 2,
+    name: "Player Two",
+    type: "NIT",
+  },
+  {
+    id: 3,
+    name: "Player Three",
+    type: "TAG",
+  },
 ];
 
 // @desc   Get all players
 // @route  GET /api/players
 export const getPlayers = (req, res, next) => {
+  console.log(
+    `${req.method} ${req.protocol}://${req.get(
+      "host"
+    )}${req.originalUrl}`
+  );
+
   res.render("index", { players });
   //   const limit = parseInt(req.query.limit);
 
@@ -40,23 +58,31 @@ export const getPlayers = (req, res, next) => {
 
 // // @desc    Create new post
 // // @route   POST /api/players
-// export const createPost = (req, res, next) => {
-//   const newPost = {
-//     id: players.length + 1,
-//     title: req.body.title,
-//   };
+export const createPlayer = (req, res, next) => {
+  console.log(
+    `${req.method} ${req.protocol}://${req.get(
+      "host"
+    )}${req.originalUrl}`
+  );
 
-//   if (!newPost.title) {
-//     const error = new Error(
-//       `Please include a title`
-//     );
-//     error.status = 400;
-//     return next(error);
-//   }
+  const newPlayer = {
+    id: players.length + 1,
+    name: req.body.name,
+  };
 
-//   players.push(newPost);
-//   res.status(201).json(players);
-// };
+  console.log("creating", newPlayer);
+
+  if (!newPlayer.name) {
+    const error = new Error(
+      `Please include a player Name`
+    );
+    error.status = 400;
+    return next(error);
+  }
+
+  players.push(newPlayer);
+  res.status(201).json(players);
+};
 
 // // @desc    Update post
 // // @route   PUT /api/players/:id

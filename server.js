@@ -28,7 +28,7 @@ app.use(
 app.use("/", players);
 
 // middleware
-app.use(notFound);
+// app.use(notFound);
 
 app.listen(PORT, () =>
   console.log(

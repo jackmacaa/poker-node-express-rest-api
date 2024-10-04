@@ -1,24 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>View/Add Players</title>
-  </head>
-  <body>
-    <h1>View and Add Players</h1>
+<%- include('paritals/header.ejs') %>
 
-    <ul>
-      <% players.forEach(player => { %>
-      <li>
-        <b>ID: </b><%= player.id %> <br />
-        <b>Player Name: </b><%= player.name %><br />
-        <b>Player Type: </b><%= player.type %>
-      </li>
-      <% }); %>
-    </ul>
-  </body>
+<body>
+  <h1>View and Add Players</h1>
+
+
+  <form id="add-player-form" form action="/" method="post">
+    <label for="name">Player Name:</label><br />
+    <input type="text" id="name" name="name" /><br />
+    <!-- <label for="player-type">Player type:</label><br />
+    <input type="text" id="player-type" name="player-type" /><br /> -->
+    <button type="submit">Add Player</button>
+  </form>
+
+  <ul>
+    <% players.forEach(player => { %>
+    <li>
+      <b>ID: </b><%= player.id %> <br />
+      <b>Player Name: </b><%= player.name %><br />
+      <b>Player Type: </b><%= player.type %>
+    </li>
+    <% }); %>
+  </ul>
+
+  <script src="./js/player.js"></script>
+</body>
+
 </html>
