@@ -124,5 +124,6 @@ export const deletePlayer = (req, res, next) => {
   players = players.filter(
     (player) => player.id !== id
   );
-  res.status(200).json(players);
+
+  res.render("index", { players });
 };

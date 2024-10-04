@@ -18,8 +18,9 @@
       <b>Player Name: </b><%= player.name %><br />
       <b>Player Type: </b><%= player.type %>
 
-      <form id="delete-player-form" action="/<%=player.id %>" method="DELETE">
-
+      <form id="delete-player-form" action="/<%=player.id %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="id" value="<%= player.id  %>">
         <button type="submit">Delete</button>
       </form>
     </li>
