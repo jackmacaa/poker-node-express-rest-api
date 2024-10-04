@@ -26,35 +26,66 @@ export const getPlayers = (req, res, next) => {
   );
 
   res.render("index", { players });
-  //   const limit = parseInt(req.query.limit);
+};
 
-  //   if (!isNaN(limit) && limit > 0) {
-  //     return res
-  //       .status(200)
-  //       .json(players.slice(0, limit));
-  //   }
+// @desc   Edit player
+// @route  PUT /api/players
+export const editPlayer = (req, res, next) => {
+  console.log(
+    `${req.method} ${req.protocol}://${req.get(
+      "host"
+    )}${req.originalUrl}`
+  );
 
-  //   res.status(200).json(players);
+  const foundPlayer = players.find(
+    (player) =>
+      player.id === Number(req.params.id)
+  );
+
+  if (foundPlayer) {
+    const playerId = foundPlayer.id - 1;
+    foundPlayer.name = req.body.name;
+    players[playerId] = foundPlayer;
+  }
+
+  res.render("index", { players });
 };
 
 // // @desc    Get single post
 // // @route   GET /api/players/:id
-// export const getPost = (req, res, next) => {
-//   const id = parseInt(req.params.id);
-//   const post = players.find(
-//     (post) => post.id === id
-//   );
+export const getPlayer = (req, res, next) => {
+  console.log("WTF");
+  const id = parseInt(req.params.id);
+  const player = players.find(
+    (player) => player.id === id
+  );
 
-//   if (!post) {
-//     const error = new Error(
-//       `A post with the id of ${id} was not found`
-//     );
-//     error.status = 404;
-//     return next(error);
-//   }
+  if (!player) {
+    const error = new Error(
+      `A player with the id of ${id} was not found`
+    );
+    error.status = 404;
+    return next(error);
+  }
 
-//   res.status(200).json(post);
-// };
+  res.status(200).json(player);
+};
+
+// // @desc    Create new post
+// // @route   GET /api/players
+export const createPlayerView = (
+  req,
+  res,
+  next
+) => {
+  console.log(
+    `${req.method} ${req.protocol}://${req.get(
+      "host"
+    )}${req.originalUrl}`
+  );
+
+  res.render("createPlayer");
+};
 
 // // @desc    Create new post
 // // @route   POST /api/players
@@ -80,28 +111,9 @@ export const createPlayer = (req, res, next) => {
   }
 
   players.push(newPlayer);
+
   res.render("index", { players });
 };
-
-// // @desc    Update post
-// // @route   PUT /api/players/:id
-// export const updatePost = (req, res, next) => {
-//   const id = parseInt(req.params.id);
-//   const post = players.find(
-//     (post) => post.id === id
-//   );
-
-//   if (!post) {
-//     const error = new Error(
-//       `A post with the id of ${id} was not found`
-//     );
-//     error.status = 404;
-//     return next(error);
-//   }
-
-//   post.title = req.body.title;
-//   res.status(200).json(players);
-// };
 
 // // @desc    Delete post
 // // @route   DELETE /api/players/:id

@@ -1,8 +1,11 @@
 import express from "express";
 import {
   getPlayers,
+  getPlayer,
   createPlayer,
+  createPlayerView,
   deletePlayer,
+  editPlayer,
 } from "../controllers/playerController.js";
 
 const router = express.Router();
@@ -10,14 +13,16 @@ const router = express.Router();
 // Get all posts
 router.get("/", getPlayers);
 
-// // Get single post
-// router.get("/:id", getPost);
+// // Edit single player
+router.put("/:id", editPlayer);
+
+// Get single player
+router.get("/:id", getPlayer);
 
 // // Create new post
 router.post("/", createPlayer);
 
-// // Update Post
-// router.put("/:id", updatePost);
+router.get("/createPlayer", createPlayerView);
 
 // Delete Post
 router.delete("/:id", deletePlayer);

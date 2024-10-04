@@ -1,9 +1,9 @@
 <%- include('paritals/header.ejs') %>
 
 <body>
-  <h1>View and Add Players</h1>
+  <h1>View and Edit Player</h1>
 
-  <a href="createPlayer">Create Player</a>
+  <a href="/">Home</a>
 
   <form id="add-player-form" action="/" method="POST">
     <label for="name">Player Name:</label><br />
@@ -13,7 +13,7 @@
     <button type="submit">Add Player</button>
   </form>
 
-  <ul>
+  <!-- <ul>
     <% players.forEach(player => { %>
     <li>
       <b>ID: </b><%= player.id %> <br />
@@ -27,7 +27,7 @@
       </form>
     </li>
     <% }); %>
-  </ul>
+  </ul> -->
 
 </body>
 
