@@ -3,28 +3,25 @@ import {
   getPlayers,
   getPlayer,
   createPlayer,
-  createPlayerView,
   deletePlayer,
   editPlayer,
 } from "../controllers/playerController.js";
 
 const router = express.Router();
 
-// Get all posts
-router.get("/", getPlayers);
-
-// // Edit single player
-router.put("/:id", editPlayer);
+// Get all players
+router.get("/api/players", getPlayers);
 
 // Get single player
-router.get("/:id", getPlayer);
+router.get("/api/players/:id", getPlayer);
 
-// // Create new post
-router.post("/", createPlayer);
+// Create new player
+router.post("/api/players", createPlayer);
 
-router.get("/createPlayer", createPlayerView);
+// Edit single player
+router.put("/api/players/:id", editPlayer);
 
-// Delete Post
-router.delete("/:id", deletePlayer);
+// Delete player
+router.delete("/api/players/:id", deletePlayer);
 
 export default router;

@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import methodOverride from "method-override";
 import players from "./routes/playersRouter.js";
 import notFound from "./middleware/notFound.js";
+import { logger } from "./middleware/logger.js";
 
 const PORT = process.env.PORT;
 
@@ -41,11 +42,12 @@ app.use(
   express.static(path.join(__dirname, "public"))
 );
 
-// Routes
-app.use("/", players);
-
 // middleware
 // app.use(notFound);
+app.use(logger);
+
+// Routes
+app.use("/", players);
 
 app.listen(PORT, () =>
   console.log(

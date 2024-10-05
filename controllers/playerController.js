@@ -19,42 +19,44 @@ let players = [
 // @desc   Get all players
 // @route  GET /api/players
 export const getPlayers = (req, res, next) => {
-  console.log(
-    `${req.method} ${req.protocol}://${req.get(
-      "host"
-    )}${req.originalUrl}`
-  );
-
-  res.render("index", { players });
+  res.status(200).json(players);
 };
 
 // @desc   Edit player
 // @route  PUT /api/players
 export const editPlayer = (req, res, next) => {
-  console.log(
-    `${req.method} ${req.protocol}://${req.get(
-      "host"
-    )}${req.originalUrl}`
-  );
+  const playerId = Number(req.params.id);
+  const playerNewName = req.body.name;
+  const playerNewType = req.body.type;
 
-  const foundPlayer = players.find(
-    (player) =>
-      player.id === Number(req.params.id)
-  );
-
-  if (foundPlayer) {
-    const playerId = foundPlayer.id - 1;
-    foundPlayer.name = req.body.name;
-    players[playerId] = foundPlayer;
+  if (!playerNewName) {
+    return res.status(404).json({
+      message: "Did not provide player name",
+    });
   }
 
-  res.render("index", { players });
+  const foundPlayer = players.find(
+    (player) => player.id === playerId
+  );
+
+  const foundPlayerId = foundPlayer.id - 1;
+
+  if (foundPlayer) {
+    foundPlayer.name = playerNewName;
+
+    if (playerNewType) {
+      foundPlayer.type = playerNewType;
+    }
+
+    players[foundPlayerId] = foundPlayer;
+  }
+
+  res.status(200).json(players[foundPlayerId]);
 };
 
 // // @desc    Get single post
 // // @route   GET /api/players/:id
 export const getPlayer = (req, res, next) => {
-  console.log("WTF");
   const id = parseInt(req.params.id);
   const player = players.find(
     (player) => player.id === id
@@ -72,34 +74,27 @@ export const getPlayer = (req, res, next) => {
 };
 
 // // @desc    Create new post
-// // @route   GET /api/players
-export const createPlayerView = (
-  req,
-  res,
-  next
-) => {
-  console.log(
-    `${req.method} ${req.protocol}://${req.get(
-      "host"
-    )}${req.originalUrl}`
-  );
-
-  res.render("createPlayer");
-};
-
-// // @desc    Create new post
 // // @route   POST /api/players
 export const createPlayer = (req, res, next) => {
-  console.log(
-    `${req.method} ${req.protocol}://${req.get(
-      "host"
-    )}${req.originalUrl}`
+  const playersName = req.body.name;
+  const playersType = req.body.type;
+
+  const playerExists = players.find(
+    (player) => player.name === playersName
   );
+
+  if (playerExists) {
+    const error = new Error(
+      `Player with this name already exists`
+    );
+    error.status = 400;
+    return next(error);
+  }
 
   const newPlayer = {
     id: players.length + 1,
-    name: req.body.name,
-    type: req.body.type,
+    name: playersName,
+    type: playersType,
   };
 
   if (!newPlayer.name) {
@@ -112,30 +107,29 @@ export const createPlayer = (req, res, next) => {
 
   players.push(newPlayer);
 
-  res.render("index", { players });
+  res.status(200).json(players);
 };
 
 // // @desc    Delete post
 // // @route   DELETE /api/players/:id
 export const deletePlayer = (req, res, next) => {
-  console.log(req.params);
-  console.log(req.body);
-  const id = parseInt(req.params.id);
-  const player = players.find(
-    (player) => player.id === id
+  const playersId = parseInt(req.params.id);
+
+  const foundPlayer = players.find(
+    (player) => player.id === playersId
   );
 
-  if (!player) {
+  if (!foundPlayer) {
     const error = new Error(
-      `A player with the id of ${id} was not found`
+      `A player with the id of ${playersId} was not found`
     );
     error.status = 404;
     return next(error);
   }
 
   players = players.filter(
-    (player) => player.id !== id
+    (player) => player.id !== playersId
   );
 
-  res.render("index", { players });
+  res.status(200).json(players);
 };
