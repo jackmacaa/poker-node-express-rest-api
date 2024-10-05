@@ -3,24 +3,16 @@
 <body>
   <h1>View and Add Players</h1>
 
-  <a href="createPlayer">Create Player</a>
-
-  <form id="add-player-form" action="/" method="POST">
-    <label for="name">Player Name:</label><br />
-    <input type="text" id="name" name="name" /><br />
-    <label for="type">type:</label><br />
-    <input type="text" id="type" name="type" /><br />
-    <button type="submit">Add Player</button>
-  </form>
+  <a href="/createPlayer">Create Player</a>
 
   <ul>
-    <% players.forEach(player => { %>
+    <% playersDB.forEach(player => { %>
     <li>
       <b>ID: </b><%= player.id %> <br />
       <b>Player Name: </b><%= player.name %><br />
       <b>Player Type: </b><%= player.type %>
 
-      <form id="delete-player-form" action="/<%=player.id %>" method="POST">
+      <form id="delete-player-form" action="/api/players/<%=player.id %>" method="POST">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="id" value="<%= player.id  %>">
         <button type="submit">Delete</button>

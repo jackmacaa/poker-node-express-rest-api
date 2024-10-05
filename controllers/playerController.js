@@ -1,4 +1,4 @@
-let players = [
+let playersDB = [
   {
     id: 1,
     name: "Player One",
@@ -19,7 +19,7 @@ let players = [
 // @desc   Get all players
 // @route  GET /api/players
 export const getPlayers = (req, res, next) => {
-  res.status(200).json(players);
+  res.status(200).json(playersDB);
 };
 
 // @desc   Edit player
@@ -48,17 +48,17 @@ export const editPlayer = (req, res, next) => {
       foundPlayer.type = playerNewType;
     }
 
-    players[foundPlayerId] = foundPlayer;
+    playersDB[foundPlayerId] = foundPlayer;
   }
 
-  res.status(200).json(players[foundPlayerId]);
+  res.status(200).json(playersDB[foundPlayerId]);
 };
 
 // // @desc    Get single post
 // // @route   GET /api/players/:id
 export const getPlayer = (req, res, next) => {
   const id = parseInt(req.params.id);
-  const player = players.find(
+  const player = playersDB.find(
     (player) => player.id === id
   );
 
@@ -92,7 +92,7 @@ export const createPlayer = (req, res, next) => {
   }
 
   const newPlayer = {
-    id: players.length + 1,
+    id: playersDB.length + 1,
     name: playersName,
     type: playersType,
   };
@@ -105,9 +105,9 @@ export const createPlayer = (req, res, next) => {
     return next(error);
   }
 
-  players.push(newPlayer);
+  playersDB.push(newPlayer);
 
-  res.status(200).json(players);
+  res.redirect("/");
 };
 
 // // @desc    Delete post
@@ -115,7 +115,7 @@ export const createPlayer = (req, res, next) => {
 export const deletePlayer = (req, res, next) => {
   const playersId = parseInt(req.params.id);
 
-  const foundPlayer = players.find(
+  const foundPlayer = playersDB.find(
     (player) => player.id === playersId
   );
 
@@ -127,9 +127,11 @@ export const deletePlayer = (req, res, next) => {
     return next(error);
   }
 
-  players = players.filter(
+  playersDB = playersDB.filter(
     (player) => player.id !== playersId
   );
 
-  res.status(200).json(players);
+  res.redirect("/");
 };
+
+export default playersDB;

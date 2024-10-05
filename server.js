@@ -2,8 +2,8 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import methodOverride from "method-override";
-import players from "./routes/playersRouter.js";
-import notFound from "./middleware/notFound.js";
+import playersRouter from "./routes/playersRouter.js";
+import viewRouter from "./routes/viewRouter.js";
 import { logger } from "./middleware/logger.js";
 
 const PORT = process.env.PORT;
@@ -20,7 +20,6 @@ const __dirname = path.dirname(__filename);
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use(
   methodOverride(function (req, res) {
     if (
@@ -37,17 +36,12 @@ app.use(
   })
 );
 
-// setup static folder
-app.use(
-  express.static(path.join(__dirname, "public"))
-);
-
 // middleware
-// app.use(notFound);
 app.use(logger);
 
 // Routes
-app.use("/", players);
+app.use("/api/players", playersRouter);
+app.use("/", viewRouter);
 
 app.listen(PORT, () =>
   console.log(

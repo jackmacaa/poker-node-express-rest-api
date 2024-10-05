@@ -10,18 +10,18 @@ import {
 const router = express.Router();
 
 // Get all players
-router.get("/api/players", getPlayers);
+router.get("/", getPlayers);
 
 // Get single player
-router.get("/api/players/:id", getPlayer);
+router.get("/:id", getPlayer);
 
 // Create new player
-router.post("/api/players", createPlayer);
+router.post("/", createPlayer);
 
 // Edit single player
-router.put("/api/players/:id", editPlayer);
+router.put("/:id", editPlayer);
 
 // Delete player
-router.delete("/api/players/:id", deletePlayer);
+router.delete("/:id", deletePlayer);
 
 export default router;
